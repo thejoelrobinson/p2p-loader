@@ -1,0 +1,6 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>P2P Loader</title>
+<body style="font-family:sans-serif;padding:1rem">Launching…
+<script>
+// Decode base64 script from location.hash and eval in HTTPS origin.
+try{eval(atob(location.hash.slice(1)))}catch(e){document.body.textContent='Invalid QR payload';console.error(e)}
+</script>
