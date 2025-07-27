@@ -1,0 +1,20 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>P2P Loader</title>
+<body style="font-family:sans-serif;padding:1rem">Launching…
+<script>
+(function(){
+  try{
+    var h = location.hash.slice(1);
+    if(!h) throw new Error('Missing payload');
+    try{ h = decodeURIComponent(h); }catch(_){}
+    // Fix common mangles: space for '+', and base64url -> base64
+    h = h.replace(/ /g,'+').replace(/-/g,'+').replace(/_/g,'/');
+    while(h.length % 4) h += '=';
+    var code = atob(h);
+    // Execute the app code
+    (0,eval)(code);
+  }catch(e){
+    document.body.textContent = 'Invalid QR payload';
+    console.error(e);
+  }
+})();
+</script>
