@@ -6,12 +6,14 @@
     var h = location.hash.slice(1);
     if(!h) throw new Error('Missing payload');
     try{ h = decodeURIComponent(h); }catch(_){}
-    // Fix common mangles: space for '+', and base64url -> base64
+    // Normalize: space->+, base64url(-/_) -> base64(+/), pad to multiple of 4
     h = h.replace(/ /g,'+').replace(/-/g,'+').replace(/_/g,'/');
     while(h.length % 4) h += '=';
-    var code = atob(h);
-    // Execute the app code
-    (0,eval)(code);
+    var html = atob(h);
+    // Replace the whole document with the decoded HTML
+    document.open();
+    document.write(html);
+    document.close();
   }catch(e){
     document.body.textContent = 'Invalid QR payload';
     console.error(e);
